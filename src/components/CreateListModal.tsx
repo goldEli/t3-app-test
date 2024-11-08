@@ -39,6 +39,7 @@ import { cn } from "@/lib/utils";
 import { ListMap } from "@/lib/const";
 import { useState } from "react";
 import { createList } from "@/actions/list";
+import { useToast } from "@/hooks/use-toast"
 
 export default function CreateListModal() {
   const form = useForm({
@@ -48,6 +49,7 @@ export default function CreateListModal() {
       color: "",
     },
   });
+  const { toast } = useToast();
 
   const [open, setOpen] = useState(false);
 
@@ -60,9 +62,17 @@ export default function CreateListModal() {
     try {
       await createList(data);
       onOpenChange(false);
-      console.log("success");
+      toast({
+        title: "恭喜您",
+        description: "清单创建成功！",
+      });
     } catch (e) {
       console.log(e);
+      toast({
+        title: "哎呦",
+        description: "清单创建失败",
+        variant: "destructive",
+      });
     }
   };
 
