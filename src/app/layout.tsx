@@ -8,6 +8,9 @@ import {
   SignedOut,
   UserButton,
 } from "@clerk/nextjs";
+import { zhCN } from "@clerk/localizations";
+import zhCNlocales from "@/locales/zh.json";
+import merge from "lodash.merge";
 
 export const metadata: Metadata = {
   title: "Create T3 App",
@@ -18,13 +21,15 @@ export const metadata: Metadata = {
 export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
+  const localization = merge(zhCN, zhCNlocales);
   return (
-    <ClerkProvider>
-      <html lang="en">
+    <ClerkProvider localization={localization}>
+      <html lang="zh-CN">
         <body>
+          {/* 注释或删除下面这段代码，在使用路由保护的时候会导致错误 */}
           <header>
             <SignedOut>
-              <SignInButton />
+              <SignInButton>登录</SignInButton>
             </SignedOut>
             <SignedIn>
               <UserButton />
